@@ -1,13 +1,20 @@
 from fastapi import FastAPI, WebSocket
 from models.user import User
+import time
 
 app = FastAPI()
 
-chatrooms = ["Sport", "Movies", "TV"]
+start_time = time.time()
+chatrooms = ['Europe' , 'USA']
 
 @app.get("/test")
 def home():
-    return {"API is Online"}
+    uptime_seconds = int(time.time() - start_time)
+    return {
+        "status": "online",
+        "uptime_minutes": uptime_seconds / 60,
+        "chatrooms_available": len(chatrooms)
+    }
 
 @app.post("/user")
 def create_user(body: User):
